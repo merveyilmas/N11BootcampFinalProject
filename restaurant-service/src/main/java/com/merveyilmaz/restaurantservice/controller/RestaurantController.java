@@ -1,0 +1,46 @@
+package com.merveyilmaz.restaurantservice.controller;
+
+import com.merveyilmaz.restaurantservice.controller.concract.RestaurantControllerContract;
+import com.merveyilmaz.restaurantservice.dto.RestaurantDTO;
+import com.merveyilmaz.restaurantservice.general.RestResponse;
+import com.merveyilmaz.restaurantservice.request.RestaurantSaveRequest;
+import com.merveyilmaz.restaurantservice.request.RestaurantUpdateRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/restaurants")
+public class RestaurantController {
+
+    private RestaurantControllerContract restaurantControllerContract;
+
+    public RestaurantController(RestaurantControllerContract restaurantControllerContract) {
+        this.restaurantControllerContract = restaurantControllerContract;
+    }
+
+    @GetMapping
+    public ResponseEntity<RestResponse<List<RestaurantDTO>>> getAllRestaurants() {
+        List<RestaurantDTO> allRestaurants = restaurantControllerContract.getAllRestaurants();
+        return ResponseEntity.ok(RestResponse.of(allRestaurants));
+    }
+
+    @PostMapping
+    public ResponseEntity<RestResponse<RestaurantDTO>> saveRestaurant(@RequestBody RestaurantSaveRequest request) {
+
+        RestaurantDTO restaurantDTO = restaurantControllerContract.saveRestaurant(request);
+        return ResponseEntity.ok(RestResponse.of(restaurantDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteRestaurant(@PathVariable Long id) {
+        restaurantControllerContract.deleteRestaurant(id);
+    }
+
+    @PutMapping("/{debugRestaurantId}")
+    public ResponseEntity<RestResponse<RestaurantDTO>> updateRestaurant(@PathVariable Long debugRestaurantId, @RequestBody RestaurantUpdateRequest request) {
+        RestaurantDTO restaurantDTO = restaurantControllerContract.updateRestaurant(request);
+        return ResponseEntity.ok(RestResponse.of(restaurantDTO));
+    }
+}
