@@ -6,16 +6,22 @@ import com.merveyilmaz.userservice.general.RestResponse;
 import com.merveyilmaz.userservice.request.UserSaveRequest;
 import com.merveyilmaz.userservice.request.UserUpdatePasswordRequest;
 import com.merveyilmaz.userservice.request.UserUpdateRequest;
+import com.merveyilmaz.userservice.service.KafkaProducerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
     private UserControllerContract userControllerContract;
+    private final KafkaProducerService kafkaProducerService;
 
-    public UserController(UserControllerContract userControllerContract) {
-        this.userControllerContract = userControllerContract;
+    @GetMapping
+    public ResponseEntity<RestResponse<UserDTO>> testKafka() {
+        kafkaProducerService.sendMessage("infoLog", "deneme");
+        return null;
     }
 
     @PostMapping
