@@ -1,9 +1,9 @@
 package com.merveyilmaz.restaurantservice.request;
 
-import com.merveyilmaz.restaurantservice.enums.EnumRate;
 
-public record RestaurantSaveRequest(Long userId,
-                                    Long restaurantId,
-                                    EnumRate rate,
-                                    String comment) {
+public record RestaurantSaveRequest(String id,
+                                    String name,
+                                    String restaurantCreateDate,
+                                    double longitude,
+                                    double latitude) {
 }

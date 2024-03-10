@@ -2,9 +2,9 @@ package com.merveyilmaz.restaurantservice.dto;
 
 import java.time.LocalDateTime;
 
-public record RestaurantDTO(Long id,
+public record RestaurantDTO(String id,
                             String name,
-                            LocalDateTime restaurantCreateDate,
+                            String restaurantCreateDate,
                             double longitude,
                             double latitude) {
 }

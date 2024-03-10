@@ -1,25 +1,51 @@
 package com.merveyilmaz.restaurantservice.entitiy;
 
-import com.merveyilmaz.restaurantservice.enums.EnumGender;
-import com.merveyilmaz.restaurantservice.enums.EnumStatus;
-import com.merveyilmaz.restaurantservice.general.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.time.LocalDateTime;
+public class Restaurant {
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class Restaurant extends BaseEntity {
-
-    private Long id;
+    private String id;
     private String name;
-    private LocalDateTime restaurantCreateDate;
+    private String restaurantCreateDate;
     private double longitude;
     private double latitude;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRestaurantCreateDate() {
+        return restaurantCreateDate;
+    }
+
+    public void setRestaurantCreateDate(String restaurantCreateDate) {
+        this.restaurantCreateDate = restaurantCreateDate;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 }
