@@ -3,11 +3,13 @@ package com.merveyilmaz.userservice.controller;
 import com.merveyilmaz.userservice.controller.concract.UserControllerContract;
 import com.merveyilmaz.userservice.dto.RestaurantWithRateDTO;
 import com.merveyilmaz.userservice.dto.UserDTO;
+import com.merveyilmaz.userservice.entitiy.User;
 import com.merveyilmaz.userservice.general.RestResponse;
 import com.merveyilmaz.userservice.request.UserSaveRequest;
 import com.merveyilmaz.userservice.request.UserUpdatePasswordRequest;
 import com.merveyilmaz.userservice.request.UserUpdateRequest;
 import com.merveyilmaz.userservice.service.KafkaProducerService;
+import com.merveyilmaz.userservice.service.serviceEntity.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +20,20 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
-    private UserControllerContract userControllerContract;
+    private final UserControllerContract userControllerContract;
     private final KafkaProducerService kafkaProducerService;
+    private final UserEntityService userEntityService;
 
     @GetMapping
     public ResponseEntity<RestResponse<UserDTO>> testKafka() {
         kafkaProducerService.sendMessage("infoLog", "deneme");
         return null;
+    }
+
+    @GetMapping("getAllUser")
+    public List<User> getAllUsers() {
+
+        return userEntityService.findAll();
     }
 
     @GetMapping("/{id}/recommend-restaurant")

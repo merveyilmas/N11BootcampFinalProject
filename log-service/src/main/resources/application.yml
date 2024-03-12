@@ -1,5 +1,6 @@
 server:
   port: 8082
+
 spring:
   kafka:
     consumer:
@@ -9,12 +10,14 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   datasource:
-    url: jdbc:postgresql://localhost:5432/logService
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
-
