@@ -6,8 +6,8 @@ public class Restaurant {
     private String id;
     private String name;
     private String restaurantCreateDate;
-    private double longitude;
-    private double latitude;
+    private int longitude;
+    private int latitude;
 
     public String getId() {
         return id;
@@ -37,7 +37,7 @@ public class Restaurant {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(int longitude) {
         this.longitude = longitude;
     }
 
@@ -45,7 +45,7 @@ public class Restaurant {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(int latitude) {
         this.latitude = latitude;
     }
 }

@@ -6,9 +6,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @FeignClient(value = "restaurant", url = "http://localhost:8081/api/v1/restaurants")
 public interface RestaurantClient {
 
-    @GetMapping("/with-coordinates")
-    RestResponse<RestaurantDTO> getRestaurantByCoordinates(@PathVariable double latitude, @PathVariable double longitude);
+    @GetMapping()
+    RestResponse<List<RestaurantDTO>> getAllRestaurants();
 }

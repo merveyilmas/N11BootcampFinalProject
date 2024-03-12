@@ -9,7 +9,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   datasource:
-    url: jdbc:postgresql://localhost:5432/n11-log
+    url: jdbc:postgresql://localhost:5432/logService
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -17,3 +17,4 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+

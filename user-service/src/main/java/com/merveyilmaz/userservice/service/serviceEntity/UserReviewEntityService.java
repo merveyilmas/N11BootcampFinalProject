@@ -5,6 +5,8 @@ import com.merveyilmaz.userservice.entitiy.UserReview;
 import com.merveyilmaz.userservice.general.BaseEntityService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserReviewEntityService extends BaseEntityService<UserReview, UserReviewRepository> {
 
@@ -12,11 +14,8 @@ public class UserReviewEntityService extends BaseEntityService<UserReview, UserR
         super(repository);
     }
 
-    /*public List<UserReview> findAllByProductId(Long productId){
-        return getRepository().findAllByProductId(productId);
+    public List<UserReview> findByRestaurantId(Long restaurantId){
+        return getRepository().findByRestaurantId(restaurantId);
     }
 
-    public List<UserReview> findAllByUserId(Long userId){
-        return getRepository().findAllByUserId(userId);
-    }*/
 }
