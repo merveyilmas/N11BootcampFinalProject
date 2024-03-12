@@ -1,12 +1,22 @@
 package com.merveyilmaz.restaurantservice.entitiy;
 
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.solr.core.mapping.Indexed;
+import org.springframework.data.solr.core.mapping.SolrDocument;
 
+@SolrDocument(solrCoreName = "restaurant_service")
 public class Restaurant {
 
+    @Id
+    @Indexed(name = "id", type = "string")
     private String id;
+    @Indexed(name = "name", type = "string")
     private String name;
+    @Indexed(name = "restaurant_create_date", type = "pdate")
     private String restaurantCreateDate;
+    @Indexed(name = "longitude", type = "pint")
     private int longitude;
+    @Indexed(name = "longitude", type = "latitude")
     private int latitude;
 
     public String getId() {
