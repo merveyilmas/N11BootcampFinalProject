@@ -22,7 +22,6 @@ import java.util.List;
 public class UserController {
     private final UserControllerContract userControllerContract;
     private final KafkaProducerService kafkaProducerService;
-    private final UserEntityService userEntityService;
 
     @GetMapping("/errorLog")
     public ResponseEntity<RestResponse<UserDTO>> testErrorLogKafka() {
@@ -36,9 +35,8 @@ public class UserController {
         return null;
     }
     @GetMapping()
-    public ResponseEntity<RestResponse<List<User>>> getAllUsers() {
-
-        List<User> users =  userEntityService.findAll();
+    public ResponseEntity<RestResponse<List<UserDTO>>> getAllUsers() {
+        List<UserDTO> users = userControllerContract.getAllUsers();
         return ResponseEntity.ok(RestResponse.of(users));
     }
 

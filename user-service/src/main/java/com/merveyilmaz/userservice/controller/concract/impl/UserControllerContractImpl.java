@@ -27,6 +27,12 @@ public class UserControllerContractImpl implements UserControllerContract {
     private final RestaurantRecommendationService recommendationService;
 
     @Override
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userEntityService.findAll();
+        return UserMapper.INSTANCE.convertToUserDTOs(users);
+    }
+
+    @Override
     public List<RestaurantWithRateDTO> recommendRestaurant(Long userId) {
         return recommendationService.recommendRestaurants(userId);
     }

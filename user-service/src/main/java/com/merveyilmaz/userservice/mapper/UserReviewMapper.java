@@ -1,6 +1,8 @@
 package com.merveyilmaz.userservice.mapper;
 
+import com.merveyilmaz.userservice.dto.UserDTO;
 import com.merveyilmaz.userservice.dto.UserReviewDTO;
+import com.merveyilmaz.userservice.entitiy.User;
 import com.merveyilmaz.userservice.entitiy.UserReview;
 import com.merveyilmaz.userservice.request.UserReviewSaveRequest;
 import org.mapstruct.Mapper;
