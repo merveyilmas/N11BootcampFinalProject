@@ -24,16 +24,22 @@ public class UserController {
     private final KafkaProducerService kafkaProducerService;
     private final UserEntityService userEntityService;
 
-    @GetMapping
-    public ResponseEntity<RestResponse<UserDTO>> testKafka() {
-        kafkaProducerService.sendMessage("infoLog", "deneme");
+    @GetMapping("/errorLog")
+    public ResponseEntity<RestResponse<UserDTO>> testErrorLogKafka() {
+        kafkaProducerService.sendMessage("errorLog", "error");
         return null;
     }
 
-    @GetMapping("getAllUser")
-    public List<User> getAllUsers() {
+    @GetMapping("/infoLog")
+    public ResponseEntity<RestResponse<UserDTO>> testInfoLogKafka() {
+        kafkaProducerService.sendMessage("infoLog", "info");
+        return null;
+    }
+    @GetMapping()
+    public ResponseEntity<RestResponse<List<User>>> getAllUsers() {
 
-        return userEntityService.findAll();
+        List<User> users =  userEntityService.findAll();
+        return ResponseEntity.ok(RestResponse.of(users));
     }
 
     @GetMapping("/{id}/recommend-restaurant")

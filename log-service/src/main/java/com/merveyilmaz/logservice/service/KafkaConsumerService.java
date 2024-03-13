@@ -1,7 +1,9 @@
 package com.merveyilmaz.logservice.service;
 
 import com.merveyilmaz.logservice.dao.ErrorLogRepository;
+import com.merveyilmaz.logservice.dao.InfoLogRepository;
 import com.merveyilmaz.logservice.entity.ErrorLog;
+import com.merveyilmaz.logservice.entity.InfoLog;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,9 +17,10 @@ import java.time.LocalDateTime;
 public class KafkaConsumerService {
 
     private final ErrorLogRepository errorLogRepository;
+    private final InfoLogRepository infoLogRepository;
 
     @KafkaListener(topics = "errorLog", groupId = "log-consumer-group")
-    public void consume(String message) {
+    public void consumeErrors(String message) {
 
         log.info("consume started!");
 
@@ -34,7 +37,6 @@ public class KafkaConsumerService {
         errorLogRepository.save(errorLog);
 
         log.info("consume finished!");
-
     }
 
     @KafkaListener(topics = "errorLog.DLT", groupId = "log-consumer-group-dlt")
@@ -46,15 +48,16 @@ public class KafkaConsumerService {
     public void consumeInfos(String message) {
 
         log.info("consume started!");
+        System.out.println("consume started!");
 
-        ErrorLog errorLog = new ErrorLog();
-        errorLog.setDate(LocalDateTime.now());
-        errorLog.setMessage(message);
-        errorLog.setDescription("Info");
 
-        errorLogRepository.save(errorLog);
+        InfoLog infoLog = new InfoLog();
+        infoLog.setDate(LocalDateTime.now());
+        infoLog.setMessage(message);
+        infoLog.setDescription("Info");
+
+        infoLogRepository.save(infoLog);
 
         log.info("consume finished!");
-
     }
 }
