@@ -22,8 +22,8 @@ public class RestaurantEntityService {
         return restaurant;
     }
 
-    public List<Restaurant> findAll() {
-        List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
+    public Iterable<Restaurant> findAll() {
+        Iterable<Restaurant> restaurants =  restaurantRepository.findAll();
         return restaurants;
     }
 

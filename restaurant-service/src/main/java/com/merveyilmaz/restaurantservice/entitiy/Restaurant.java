@@ -16,7 +16,7 @@ public class Restaurant {
     private String restaurantCreateDate;
     @Indexed(name = "longitude", type = "pint")
     private int longitude;
-    @Indexed(name = "longitude", type = "pint")
+    @Indexed(name = "latitude", type = "pint")
     private int latitude;
 
     public String getId() {
@@ -43,7 +43,7 @@ public class Restaurant {
         this.restaurantCreateDate = restaurantCreateDate;
     }
 
-    public double getLongitude() {
+    public int getLongitude() {
         return longitude;
     }
 
@@ -51,7 +51,7 @@ public class Restaurant {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public int getLatitude() {
         return latitude;
     }
 
