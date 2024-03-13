@@ -34,7 +34,7 @@ public class RestaurantController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteRestaurant(@PathVariable Long id) {
+    public void deleteRestaurant(@PathVariable String id) {
         restaurantControllerContract.deleteRestaurant(id);
     }
 

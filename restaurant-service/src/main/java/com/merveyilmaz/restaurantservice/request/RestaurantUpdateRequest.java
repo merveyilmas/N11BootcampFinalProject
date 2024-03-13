@@ -1,11 +1,8 @@
 package com.merveyilmaz.restaurantservice.request;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-public record RestaurantUpdateRequest(Long id,
+public record RestaurantUpdateRequest(String id,
                                       String name,
-                                      LocalDateTime restaurantCreateDate,
-                                      double longitude,
-                                      double latitude) {
+                                      String restaurantCreateDate,
+                                      int longitude,
+                                      int latitude) {
 }

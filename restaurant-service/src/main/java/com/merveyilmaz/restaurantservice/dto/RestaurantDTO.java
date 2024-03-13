@@ -5,6 +5,6 @@ import java.time.LocalDateTime;
 public record RestaurantDTO(String id,
                             String name,
                             String restaurantCreateDate,
-                            double longitude,
-                            double latitude) {
+                            int longitude,
+                            int latitude) {
 }

@@ -12,7 +12,7 @@ public interface RestaurantControllerContract {
 
     RestaurantDTO saveRestaurant(RestaurantSaveRequest request);
 
-    void deleteRestaurant(Long id);
+    void deleteRestaurant(String id);
 
     RestaurantDTO updateRestaurant(RestaurantUpdateRequest request);
 }

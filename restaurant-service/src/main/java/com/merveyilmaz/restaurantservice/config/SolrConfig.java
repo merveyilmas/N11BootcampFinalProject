@@ -10,8 +10,8 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 
 @Configuration
 @EnableSolrRepositories(
-        basePackages = "com.merveyilmaz.restaurant-service"
-        , namedQueriesLocation = "classpath:solr-named-queries.properties"
+        basePackages = "com.merveyilmaz.restaurantservice"
+        //, namedQueriesLocation = "classpath:solr-named-queries.properties"
 )
 @ComponentScan
 public class SolrConfig {
