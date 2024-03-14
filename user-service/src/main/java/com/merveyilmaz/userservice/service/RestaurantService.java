@@ -11,6 +11,7 @@ import com.merveyilmaz.userservice.general.GeneralErrorMessage;
 import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.serviceEntity.UserReviewEntityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,14 +23,22 @@ public class RestaurantService {
 
     private final RestaurantClient restaurantClient;
     private final UserReviewEntityService userReviewEntityService;
-
+    private final KafkaProducerService kafkaProducerService;
+    @Value("${kafka-info-log-topic}")
+    private String INFO_LOG_TOPIC;
+    @Value("${kafka-error-log-topic}")
+    private String ERROR_LOG_TOPIC;
 
     public List<RestaurantResponse> getRestaurantsWithRate() {
 
         List<RestaurantResponse> restaurantResponses = new ArrayList<>();
+
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Started get all restaurants request from restaurant client.");
         List<RestaurantDTO> restaurants = this.restaurantClient.getAllRestaurants().getData();
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all restaurants response. Response: " + restaurants);
 
         if(restaurants.isEmpty()){
+            kafkaProducerService.sendMessage(ERROR_LOG_TOPIC, "Received empty list from restaurant client!");
             throw new EmptyListException(GeneralErrorMessage.EMPTY_LIST);
         }
 

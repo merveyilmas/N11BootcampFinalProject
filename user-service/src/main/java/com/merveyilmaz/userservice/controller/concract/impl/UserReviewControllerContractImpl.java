@@ -10,9 +10,11 @@ import com.merveyilmaz.userservice.mapper.UserMapper;
 import com.merveyilmaz.userservice.mapper.UserReviewMapper;
 import com.merveyilmaz.userservice.request.UserReviewSaveRequest;
 import com.merveyilmaz.userservice.request.UserReviewUpdateCommentAndScoreRequest;
+import com.merveyilmaz.userservice.service.KafkaProducerService;
 import com.merveyilmaz.userservice.service.serviceEntity.UserReviewEntityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +25,18 @@ import java.util.List;
 public class UserReviewControllerContractImpl implements UserReviewControllerContract {
 
     private final UserReviewEntityService userReviewEntityService;
+    private final KafkaProducerService kafkaProducerService;
+    @Value("${kafka-info-log-topic}")
+    private String INFO_LOG_TOPIC;
+
+    @Value("${kafka-error-log-topic}")
+    private String ERROR_LOG_TOPIC;
 
     @Override
     public List<UserReviewDTO> getAllUserReviews() {
         List<UserReview> userReviews = userReviewEntityService.findAll();
+
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "User reviews listed successfully.");
         return UserReviewMapper.INSTANCE.convertToUserReviewDTOs(userReviews);
     }
 
@@ -36,12 +46,14 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
 
         userReview = userReviewEntityService.save(userReview);
 
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "User reviewed saved successfully.");
         return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
     }
 
     @Override
     public void deleteUserReview(Long id) {
         userReviewEntityService.delete(id);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "User review deleted successfully.");
     }
 
     @Override
@@ -52,6 +64,7 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
         userReview.setRate(newCommentAndScore.newScore());
         userReviewEntityService.save(userReview);
 
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "User review comment and score updated successfully.");
         return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
     }
 }

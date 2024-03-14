@@ -5,6 +5,8 @@ import com.merveyilmaz.restaurantservice.dto.RestaurantDTO;
 import com.merveyilmaz.restaurantservice.general.RestResponse;
 import com.merveyilmaz.restaurantservice.request.RestaurantSaveRequest;
 import com.merveyilmaz.restaurantservice.request.RestaurantUpdateRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/restaurants")
 @Validated
+@RequiredArgsConstructor
 public class RestaurantController {
 
-    private RestaurantControllerContract restaurantControllerContract;
-
-    public RestaurantController(RestaurantControllerContract restaurantControllerContract) {
-        this.restaurantControllerContract = restaurantControllerContract;
-    }
+    private final RestaurantControllerContract restaurantControllerContract;
 
     @GetMapping
     public ResponseEntity<RestResponse<List<RestaurantDTO>>> getAllRestaurants() {

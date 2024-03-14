@@ -4,6 +4,7 @@ import com.merveyilmaz.userservice.entitiy.User;
 import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.serviceEntity.UserEntityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +16,9 @@ public class RestaurantRecommendationService {
     private static final double EARTH_RADIUS_KM = 6371.0;
     private final UserEntityService userEntityService;
     private final RestaurantService restaurantService;
+    private final KafkaProducerService kafkaProducerService;
+    @Value("${kafka-info-log-topic}")
+    private String INFO_LOG_TOPIC;
 
     public List<RestaurantResponse> recommendRestaurants(long userId) {
 
@@ -23,6 +27,7 @@ public class RestaurantRecommendationService {
         double userLongitude = user.getLongitude();
 
         List<RestaurantResponse> restaurantResponses = this.restaurantService.getRestaurantsWithRate();
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Got restaurants with rate successfully. Restaurants with rate response: " + restaurantResponses);
         List<RestaurantResponse> recommendedRestaurants = new ArrayList<>();
 
         for (RestaurantResponse restaurant : restaurantResponses) {
@@ -60,7 +65,6 @@ public class RestaurantRecommendationService {
                         Math.pow(Math.sin(deltaLon / 2), 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        // Calculate the distance
         double distance = EARTH_RADIUS_KM * c;
 
         return distance;
