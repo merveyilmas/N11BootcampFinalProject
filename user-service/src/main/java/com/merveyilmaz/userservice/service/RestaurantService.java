@@ -1,9 +1,11 @@
 package com.merveyilmaz.userservice.service;
 
 import com.merveyilmaz.userservice.client.RestaurantClient;
+import com.merveyilmaz.userservice.converter.RestaurantConverter;
+import com.merveyilmaz.userservice.dto.ConvertedRestaurantDTO;
 import com.merveyilmaz.userservice.dto.RestaurantDTO;
-import com.merveyilmaz.userservice.dto.RestaurantWithRateDTO;
 import com.merveyilmaz.userservice.entitiy.UserReview;
+import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.serviceEntity.UserReviewEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,25 +21,28 @@ public class RestaurantService {
     private final UserReviewEntityService userReviewEntityService;
 
 
-    public List<RestaurantWithRateDTO> getRestaurantsWithRate() {
+    public List<RestaurantResponse> getRestaurantsWithRate() {
 
-        List<RestaurantWithRateDTO> restaurantsWithRate = new ArrayList<>();
+        List<RestaurantResponse> restaurantResponses = new ArrayList<>();
         List<RestaurantDTO> restaurants = this.restaurantClient.getAllRestaurants().getData();
+        List<ConvertedRestaurantDTO> convertedRestaurants = RestaurantConverter.convertToRestaurants(restaurants);
 
-        for (RestaurantDTO restaurant : restaurants) {
+        for (ConvertedRestaurantDTO restaurant : convertedRestaurants) {
 
             List<UserReview> userReviewsWithRestaurantId = this.userReviewEntityService.findByRestaurantId((long) restaurant.id());
             double averageRate = calculateAverageRate(userReviewsWithRestaurantId);
 
-            RestaurantWithRateDTO restaurantWithRate = new RestaurantWithRateDTO(restaurant.id(),
-                    restaurant.name(),
-                    restaurant.latitude(),
-                    restaurant.longitude(),
-                    averageRate);
+            RestaurantResponse restaurantResponse = new RestaurantResponse();
+            restaurantResponse.setId(restaurant.id());
+            restaurantResponse.setName(restaurant.name());
+            restaurantResponse.setLatitude(restaurant.latitude());
+            restaurantResponse.setLongitude(restaurant.longitude());
+            restaurantResponse.setAverageRate(averageRate);
 
-            restaurantsWithRate.add(restaurantWithRate);
+            restaurantResponses.add(restaurantResponse);
         }
-        return restaurantsWithRate;
+
+        return restaurantResponses;
 
     }
 

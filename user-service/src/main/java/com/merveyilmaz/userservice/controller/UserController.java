@@ -1,15 +1,13 @@
 package com.merveyilmaz.userservice.controller;
 
 import com.merveyilmaz.userservice.controller.concract.UserControllerContract;
-import com.merveyilmaz.userservice.dto.RestaurantWithRateDTO;
 import com.merveyilmaz.userservice.dto.UserDTO;
-import com.merveyilmaz.userservice.entitiy.User;
 import com.merveyilmaz.userservice.general.RestResponse;
 import com.merveyilmaz.userservice.request.UserSaveRequest;
 import com.merveyilmaz.userservice.request.UserUpdatePasswordRequest;
 import com.merveyilmaz.userservice.request.UserUpdateRequest;
+import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.KafkaProducerService;
-import com.merveyilmaz.userservice.service.serviceEntity.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,9 +38,9 @@ public class UserController {
         return ResponseEntity.ok(RestResponse.of(users));
     }
 
-    @GetMapping("/{id}/recommend-restaurant")
-    public ResponseEntity<RestResponse<List<RestaurantWithRateDTO>>> getRecommendRestaurants(@PathVariable Long userId) {
-        List<RestaurantWithRateDTO> recommendRestaurants = userControllerContract.recommendRestaurant(userId);
+    @GetMapping("/recommend-restaurant")
+    public ResponseEntity<RestResponse<List<RestaurantResponse>>> getRecommendRestaurants(@RequestParam Long userId) {
+        List<RestaurantResponse> recommendRestaurants = userControllerContract.recommendRestaurant(userId);
         return ResponseEntity.ok(RestResponse.of(recommendRestaurants));
     }
 

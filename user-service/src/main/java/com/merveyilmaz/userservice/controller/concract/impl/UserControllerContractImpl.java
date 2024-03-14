@@ -1,7 +1,6 @@
 package com.merveyilmaz.userservice.controller.concract.impl;
 
 import com.merveyilmaz.userservice.controller.concract.UserControllerContract;
-import com.merveyilmaz.userservice.dto.RestaurantWithRateDTO;
 import com.merveyilmaz.userservice.dto.UserDTO;
 import com.merveyilmaz.userservice.entitiy.User;
 import com.merveyilmaz.userservice.errorMessage.UserErrorMessage;
@@ -10,6 +9,7 @@ import com.merveyilmaz.userservice.mapper.UserMapper;
 import com.merveyilmaz.userservice.request.UserSaveRequest;
 import com.merveyilmaz.userservice.request.UserUpdatePasswordRequest;
 import com.merveyilmaz.userservice.request.UserUpdateRequest;
+import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.RestaurantRecommendationService;
 import com.merveyilmaz.userservice.service.serviceEntity.UserEntityService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class UserControllerContractImpl implements UserControllerContract {
     }
 
     @Override
-    public List<RestaurantWithRateDTO> recommendRestaurant(Long userId) {
+    public List<RestaurantResponse> recommendRestaurant(Long userId) {
         return recommendationService.recommendRestaurants(userId);
     }
 
