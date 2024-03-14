@@ -27,6 +27,7 @@ public class GeneralControllerAdvice {
         return new ResponseEntity<>(restResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+
     @ExceptionHandler
     public final ResponseEntity<Object> handleRTExceptions(ItemNotFoundException e, WebRequest request) {
 

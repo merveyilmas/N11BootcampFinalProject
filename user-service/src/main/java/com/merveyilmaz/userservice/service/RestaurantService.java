@@ -5,6 +5,9 @@ import com.merveyilmaz.userservice.converter.RestaurantConverter;
 import com.merveyilmaz.userservice.dto.ConvertedRestaurantDTO;
 import com.merveyilmaz.userservice.dto.RestaurantDTO;
 import com.merveyilmaz.userservice.entitiy.UserReview;
+import com.merveyilmaz.userservice.exceptions.EmptyListException;
+import com.merveyilmaz.userservice.exceptions.ItemNotFoundException;
+import com.merveyilmaz.userservice.general.GeneralErrorMessage;
 import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.serviceEntity.UserReviewEntityService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,11 @@ public class RestaurantService {
 
         List<RestaurantResponse> restaurantResponses = new ArrayList<>();
         List<RestaurantDTO> restaurants = this.restaurantClient.getAllRestaurants().getData();
+
+        if(restaurants.isEmpty()){
+            throw new EmptyListException(GeneralErrorMessage.EMPTY_LIST);
+        }
+
         List<ConvertedRestaurantDTO> convertedRestaurants = RestaurantConverter.convertToRestaurants(restaurants);
 
         for (ConvertedRestaurantDTO restaurant : convertedRestaurants) {
