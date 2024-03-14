@@ -37,7 +37,7 @@ public class UserController {
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received get all user request.");
         List<UserDTO> users = userControllerContract.getAllUsers();
 
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all users response. Response: " + users);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all users response returned.");
         return ResponseEntity.ok(RestResponse.of(users));
     }
 
@@ -47,7 +47,7 @@ public class UserController {
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received get recommend restaurants request. Request: " + userId);
         List<RestaurantResponse> recommendRestaurants = userControllerContract.recommendRestaurant(userId);
 
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get recommend restaurants response. Response: " + recommendRestaurants);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get recommend restaurants response returned.");
         return ResponseEntity.ok(RestResponse.of(recommendRestaurants));
     }
 
@@ -62,7 +62,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable @NotNull Long id) {
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received delete user request. Request: " + id);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received delete user request. Request id: " + id);
         userControllerContract.deleteUser(id);
     }
 

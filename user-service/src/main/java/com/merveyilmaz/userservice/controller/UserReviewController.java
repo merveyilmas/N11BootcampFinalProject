@@ -33,7 +33,7 @@ public class UserReviewController {
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received get all user reviews request.");
         List<UserReviewDTO> userReviews = userReviewControllerContract.getAllUserReviews();
 
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all user reviews response. Response: " + userReviews);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all user reviews response returned.");
         return ResponseEntity.ok(RestResponse.of(userReviews));
     }
 
@@ -48,7 +48,7 @@ public class UserReviewController {
 
     @DeleteMapping("/{id}")
     public void deleteUserReview(@PathVariable Long id) {
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received delete user review request. Request: " + id);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received delete user review request. Request id: " + id);
         userReviewControllerContract.deleteUserReview(id);
     }
 
@@ -59,7 +59,7 @@ public class UserReviewController {
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received update user review command and score request. Request: " + request);
         UserReviewDTO userReviewDTO = userReviewControllerContract.updateCommentAndScore(id, request);
 
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Update user review command and score response. Response: " + userReviewDTO);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Update user review command and score. Response: " + userReviewDTO);
         return ResponseEntity.ok(RestResponse.of(userReviewDTO));
     }
 }

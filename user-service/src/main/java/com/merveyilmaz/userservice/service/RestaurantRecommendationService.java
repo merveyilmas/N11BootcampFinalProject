@@ -27,7 +27,7 @@ public class RestaurantRecommendationService {
         double userLongitude = user.getLongitude();
 
         List<RestaurantResponse> restaurantResponses = this.restaurantService.getRestaurantsWithRate();
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Got restaurants with rate successfully. Restaurants with rate response: " + restaurantResponses);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Got restaurants with rate to list recommended restaurants.");
         List<RestaurantResponse> recommendedRestaurants = new ArrayList<>();
 
         for (RestaurantResponse restaurant : restaurantResponses) {

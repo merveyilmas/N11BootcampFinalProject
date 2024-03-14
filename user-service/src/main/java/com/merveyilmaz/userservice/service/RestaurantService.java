@@ -35,7 +35,7 @@ public class RestaurantService {
 
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Started get all restaurants request from restaurant client.");
         List<RestaurantDTO> restaurants = this.restaurantClient.getAllRestaurants().getData();
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all restaurants response. Response: " + restaurants);
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all restaurants response from restaurant client.");
 
         if(restaurants.isEmpty()){
             kafkaProducerService.sendMessage(ERROR_LOG_TOPIC, "Received empty list from restaurant client!");
