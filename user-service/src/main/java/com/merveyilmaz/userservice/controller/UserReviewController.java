@@ -6,13 +6,17 @@ import com.merveyilmaz.userservice.dto.UserReviewDTO;
 import com.merveyilmaz.userservice.general.RestResponse;
 import com.merveyilmaz.userservice.request.UserReviewSaveRequest;
 import com.merveyilmaz.userservice.request.UserReviewUpdateCommentAndScoreRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/userReviews")
+@Validated
 public class UserReviewController {
 
     private UserReviewControllerContract userReviewControllerContract;
@@ -28,7 +32,7 @@ public class UserReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<RestResponse<UserReviewDTO>> saveUserReview(@RequestBody UserReviewSaveRequest request) {
+    public ResponseEntity<RestResponse<UserReviewDTO>> saveUserReview(@RequestBody @Valid UserReviewSaveRequest request) {
 
         UserReviewDTO userReviewDTO = userReviewControllerContract.saveUserReview(request);
         return ResponseEntity.ok(RestResponse.of(userReviewDTO));
@@ -40,7 +44,8 @@ public class UserReviewController {
     }
 
     @PatchMapping("/{id}/comment-and-score")
-    public ResponseEntity<RestResponse<UserReviewDTO>> updateCommentAndScore(@PathVariable Long id, @RequestParam UserReviewUpdateCommentAndScoreRequest newCommentAndScore) {
+    public ResponseEntity<RestResponse<UserReviewDTO>> updateCommentAndScore(@PathVariable @NotNull Long id,
+                                                                             @RequestParam UserReviewUpdateCommentAndScoreRequest newCommentAndScore) {
 
         UserReviewDTO userReviewDTO = userReviewControllerContract.updateCommentAndScore(id, newCommentAndScore);
         return ResponseEntity.ok(RestResponse.of(userReviewDTO));

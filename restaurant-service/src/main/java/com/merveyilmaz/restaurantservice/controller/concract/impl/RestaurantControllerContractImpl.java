@@ -3,7 +3,7 @@ package com.merveyilmaz.restaurantservice.controller.concract.impl;
 import com.merveyilmaz.restaurantservice.controller.concract.RestaurantControllerContract;
 import com.merveyilmaz.restaurantservice.dto.RestaurantDTO;
 import com.merveyilmaz.restaurantservice.entitiy.Restaurant;
-import com.merveyilmaz.restaurantservice.mapper.RestaurantConverter;
+import com.merveyilmaz.restaurantservice.converter.RestaurantConverter;
 import com.merveyilmaz.restaurantservice.request.RestaurantSaveRequest;
 import com.merveyilmaz.restaurantservice.request.RestaurantUpdateRequest;
 import com.merveyilmaz.restaurantservice.service.serviceEntity.RestaurantEntityService;

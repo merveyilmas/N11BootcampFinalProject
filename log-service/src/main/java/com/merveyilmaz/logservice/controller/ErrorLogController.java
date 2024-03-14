@@ -20,7 +20,7 @@ public class ErrorLogController {
 
     private final ErrorLogEntityService errorLogEntityService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<RestResponse<List<ErrorLog>>> getAllErrorLogs() {
 
         List<ErrorLog> errorLogs = errorLogEntityService.findAll();

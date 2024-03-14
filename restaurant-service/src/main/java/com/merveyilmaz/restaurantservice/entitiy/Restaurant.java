@@ -4,18 +4,25 @@ import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @SolrDocument(solrCoreName = "restaurant_service")
 public class Restaurant {
 
     @Id
     @Indexed(name = "id", type = "string")
     private String id;
+    @NotBlank
     @Indexed(name = "name", type = "string")
     private String name;
+    @NotBlank
     @Indexed(name = "restaurant_create_date", type = "pdate")
     private String restaurantCreateDate;
+    @NotNull
     @Indexed(name = "longitude", type = "pint")
     private int longitude;
+    @NotNull
     @Indexed(name = "latitude", type = "pint")
     private int latitude;
 

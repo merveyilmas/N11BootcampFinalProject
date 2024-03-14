@@ -1,7 +1,10 @@
 package com.merveyilmaz.restaurantservice.request;
 
-public record RestaurantUpdateRequest(String id,
-                                      String name,
-                                      int longitude,
-                                      int latitude) {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+public record RestaurantUpdateRequest(@NotBlank String id,
+                                      @NotBlank String name,
+                                      @NotNull int longitude,
+                                      @NotNull int latitude) {
 }

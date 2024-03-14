@@ -16,6 +16,34 @@ public class RestaurantRecommendationService {
     private final UserEntityService userEntityService;
     private final RestaurantService restaurantService;
 
+    public List<RestaurantResponse> recommendRestaurants(long userId) {
+
+        User user = this.userEntityService.findByIdWithControl(userId);
+        double userLatitude = user.getLatitude();
+        double userLongitude = user.getLongitude();
+
+        List<RestaurantResponse> restaurantResponses = this.restaurantService.getRestaurantsWithRate();
+        List<RestaurantResponse> recommendedRestaurants = new ArrayList<>();
+
+        for (RestaurantResponse restaurant : restaurantResponses) {
+            double distance = calculateDistance(userLatitude, userLongitude, restaurant.getLatitude(), restaurant.getLongitude());
+            double restaurantRate = restaurant.getAverageRate();
+
+            if (distance <= 10.0) {
+                double recommendationScore = calculateRecommendationScore(restaurantRate, distance);
+
+                restaurant.setDistance(distance);
+                restaurant.setRecommendationScore(recommendationScore);
+                recommendedRestaurants.add(restaurant);
+            }
+        }
+
+        Collections.sort(recommendedRestaurants, Comparator.comparingDouble(RestaurantResponse::getRecommendationScore).reversed());
+        int numRecommendations = Math.min(recommendedRestaurants.size(), 3);
+
+        return recommendedRestaurants.subList(0, numRecommendations);
+    }
+
     public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
 
         double lat1Rad = Math.toRadians(lat1);
@@ -36,35 +64,6 @@ public class RestaurantRecommendationService {
         double distance = EARTH_RADIUS_KM * c;
 
         return distance;
-    }
-
-    public List<RestaurantResponse> recommendRestaurants(long userId) {
-
-        User user = this.userEntityService.findByIdWithControl(userId);
-        double userLatitude = user.getLatitude();
-        double userLongitude = user.getLongitude();
-
-        List<RestaurantResponse> restaurantResponses = this.restaurantService.getRestaurantsWithRate();
-        List<RestaurantResponse> recommendedRestaurants = new ArrayList<>();
-
-        for (RestaurantResponse restaurant : restaurantResponses) {
-            double distance = calculateDistance(userLatitude, userLongitude, restaurant.getLatitude(), restaurant.getLongitude());
-            double restaurantRate = restaurant.getAverageRate();
-
-            if (distance <= 10.0) {
-
-                double recommendationScore = calculateRecommendationScore(restaurantRate, distance);
-
-                restaurant.setDistance(distance);
-                restaurant.setRecommendationScore(recommendationScore);
-                recommendedRestaurants.add(restaurant);
-            }
-        }
-
-        Collections.sort(recommendedRestaurants, Comparator.comparingDouble(RestaurantResponse::getRecommendationScore).reversed());
-        int numRecommendations = Math.min(recommendedRestaurants.size(), 3);
-
-        return recommendedRestaurants.subList(0, numRecommendations);
     }
 
     public static double calculateRecommendationScore(double restaurantRating, double distanceInKm) {

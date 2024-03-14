@@ -18,7 +18,7 @@ public class InfoLogController {
 
     private final InfoLogEntityService infoLogEntityService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<RestResponse<List<InfoLog>>> getAllInfoLogs() {
 
         List<InfoLog> infoLogs = infoLogEntityService.findAll();

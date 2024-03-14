@@ -1,5 +1,7 @@
 package com.merveyilmaz.userservice.request;
 
-public record UserUpdatePasswordRequest(String oldPass,
-                                        String newPass) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UserUpdatePasswordRequest(@NotBlank String oldPass,
+                                        @NotBlank String newPass) {
 }

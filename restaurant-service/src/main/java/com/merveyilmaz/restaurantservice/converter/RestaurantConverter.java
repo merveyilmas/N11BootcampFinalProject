@@ -1,4 +1,4 @@
-package com.merveyilmaz.restaurantservice.mapper;
+package com.merveyilmaz.restaurantservice.converter;
 
 import com.merveyilmaz.restaurantservice.dto.RestaurantDTO;
 import com.merveyilmaz.restaurantservice.entitiy.Restaurant;
@@ -11,9 +11,6 @@ import java.util.List;
 public class RestaurantConverter {
 
     public static Restaurant convertToRestaurant(RestaurantSaveRequest request) {
-
-        System.out.println("request.latitude()");
-        System.out.println(request.latitude());
 
         Restaurant restaurant = new Restaurant();
         restaurant.setId(request.id());

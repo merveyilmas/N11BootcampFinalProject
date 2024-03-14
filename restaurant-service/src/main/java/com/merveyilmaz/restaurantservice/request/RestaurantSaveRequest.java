@@ -1,8 +1,11 @@
 package com.merveyilmaz.restaurantservice.request;
 
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public record RestaurantSaveRequest(String id,
-                                    String name,
-                                    int longitude,
-                                    int latitude) {
+                                    @NotBlank String name,
+                                    @NotNull int longitude,
+                                    @NotNull int latitude) {
 }

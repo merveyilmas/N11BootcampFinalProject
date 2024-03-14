@@ -6,12 +6,16 @@ import com.merveyilmaz.restaurantservice.general.RestResponse;
 import com.merveyilmaz.restaurantservice.request.RestaurantSaveRequest;
 import com.merveyilmaz.restaurantservice.request.RestaurantUpdateRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
+@Validated
 public class RestaurantController {
 
     private RestaurantControllerContract restaurantControllerContract;
@@ -27,19 +31,19 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<RestResponse<RestaurantDTO>> saveRestaurant(@RequestBody RestaurantSaveRequest request) {
+    public ResponseEntity<RestResponse<RestaurantDTO>> saveRestaurant(@RequestBody @Valid RestaurantSaveRequest request) {
 
         RestaurantDTO restaurantDTO = restaurantControllerContract.saveRestaurant(request);
         return ResponseEntity.ok(RestResponse.of(restaurantDTO));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteRestaurant(@PathVariable String id) {
+    public void deleteRestaurant(@PathVariable @NotNull String id) {
         restaurantControllerContract.deleteRestaurant(id);
     }
 
     @PutMapping("/{debugRestaurantId}")
-    public ResponseEntity<RestResponse<RestaurantDTO>> updateRestaurant(@PathVariable Long debugRestaurantId, @RequestBody RestaurantUpdateRequest request) {
+    public ResponseEntity<RestResponse<RestaurantDTO>> updateRestaurant(@PathVariable Long debugRestaurantId, @RequestBody @Valid RestaurantUpdateRequest request) {
         RestaurantDTO restaurantDTO = restaurantControllerContract.updateRestaurant(request);
         return ResponseEntity.ok(RestResponse.of(restaurantDTO));
     }

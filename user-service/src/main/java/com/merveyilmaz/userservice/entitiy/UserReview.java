@@ -3,6 +3,7 @@ package com.merveyilmaz.userservice.entitiy;
 import com.merveyilmaz.userservice.enums.EnumRate;
 import com.merveyilmaz.userservice.general.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +22,15 @@ public class UserReview extends BaseEntity {
     @Id
     private Long id;
 
+    @NotNull
     @Column(name = "USER_ID", nullable = false)
     private Long userId;
 
+    @NotNull
     @Column(name = "RESTAURANT_ID", nullable = false)
     private Long restaurantId;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "RATE", length = 30, nullable = false)
     private EnumRate rate;
