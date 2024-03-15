@@ -1,12 +1,8 @@
 package com.merveyilmaz.userservice.controller.concract.impl;
 
-import com.merveyilmaz.userservice.client.RestaurantClient;
 import com.merveyilmaz.userservice.controller.concract.UserReviewControllerContract;
-import com.merveyilmaz.userservice.dto.UserDTO;
 import com.merveyilmaz.userservice.dto.UserReviewDTO;
-import com.merveyilmaz.userservice.entitiy.User;
 import com.merveyilmaz.userservice.entitiy.UserReview;
-import com.merveyilmaz.userservice.mapper.UserMapper;
 import com.merveyilmaz.userservice.mapper.UserReviewMapper;
 import com.merveyilmaz.userservice.request.UserReviewSaveRequest;
 import com.merveyilmaz.userservice.request.UserReviewUpdateCommentAndScoreRequest;
