@@ -45,3 +45,5 @@
 2024-03-16 13:39:59.250 INFO  (qtp693267461-20-null-6) [c: s: r: x:restaurant_service t:null-6] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&start=0&rows=8&wt=javabin&version=2} hits=8 status=0 QTime=0
 2024-03-16 13:57:18.045 INFO  (qtp693267461-27-null-7) [c: s: r: x:restaurant_service t:null-7] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&start=0&rows=0&wt=javabin&version=2} hits=8 status=0 QTime=1
 2024-03-16 13:57:18.050 INFO  (qtp693267461-21-null-8) [c: s: r: x:restaurant_service t:null-8] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&start=0&rows=8&wt=javabin&version=2} hits=8 status=0 QTime=0
+2024-03-16 14:37:07.701 INFO  (qtp693267461-24-null-9) [c: s: r: x:restaurant_service t:null-9] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&start=0&rows=0&wt=javabin&version=2} hits=8 status=0 QTime=17
+2024-03-16 14:37:07.714 INFO  (qtp693267461-18-null-10) [c: s: r: x:restaurant_service t:null-10] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&start=0&rows=8&wt=javabin&version=2} hits=8 status=0 QTime=0

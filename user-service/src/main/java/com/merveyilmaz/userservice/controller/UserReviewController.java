@@ -53,7 +53,7 @@ public class UserReviewController {
 
     @PatchMapping("/{id}/comment-and-score")
     public ResponseEntity<RestResponse<UserReviewDTO>> updateCommentAndScore(@PathVariable @NotNull Long id,
-                                                                             @RequestParam UserReviewUpdateCommentAndScoreRequest request) {
+                                                                             @RequestBody UserReviewUpdateCommentAndScoreRequest request) {
 
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Received update user review command and score request. Request: " + request);
         UserReviewDTO userReviewDTO = userReviewControllerContract.updateCommentAndScore(id, request);

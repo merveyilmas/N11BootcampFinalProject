@@ -71,7 +71,6 @@ class UserReviewControllerTest extends BaseControllerTest {
         assertTrue(success);
     }
 
-
     @Test
     void shouldUpdateCommentAndScore() throws Exception {
         UserReviewUpdateCommentAndScoreRequest request = new UserReviewUpdateCommentAndScoreRequest(
@@ -79,7 +78,7 @@ class UserReviewControllerTest extends BaseControllerTest {
 
         String requestAsString = objectMapper.writeValueAsString(request);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/userReviews/202/comment-and-score")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/userReviews/402/comment-and-score")
                         .content(requestAsString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -89,6 +88,4 @@ class UserReviewControllerTest extends BaseControllerTest {
 
         assertTrue(success);
     }
-
-
 }

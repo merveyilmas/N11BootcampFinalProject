@@ -56,11 +56,11 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
     }
 
     @Override
-    public UserReviewDTO updateCommentAndScore(Long id, UserReviewUpdateCommentAndScoreRequest newCommentAndScore) {
+    public UserReviewDTO updateCommentAndScore(Long id, UserReviewUpdateCommentAndScoreRequest request) {
         UserReview userReview = userReviewEntityService.findByIdWithControl(id);
 
-        userReview.setComment(newCommentAndScore.newComment());
-        userReview.setRate(newCommentAndScore.newScore());
+        userReview.setComment(request.newComment());
+        userReview.setRate(request.newScore());
         userReviewEntityService.save(userReview);
 
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "User review comment and score updated successfully.");
