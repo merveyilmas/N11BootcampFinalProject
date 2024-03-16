@@ -2,6 +2,7 @@ package com.merveyilmaz.userservice.general;
 
 
 import com.merveyilmaz.userservice.exceptions.ItemNotFoundException;
+import com.merveyilmaz.userservice.exceptions.NullPointerException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -57,6 +58,18 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleRTExceptions(ItemNotFoundException e, WebRequest request) {
+
+        String message = e.getBaseErrorMessage().getMessage();
+        String description = request.getDescription(false);
+
+        var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
+        var restResponse = RestResponse.error(generalErrorMessages);
+
+        return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleRTExceptions(NullPointerException e, WebRequest request) {
 
         String message = e.getBaseErrorMessage().getMessage();
         String description = request.getDescription(false);

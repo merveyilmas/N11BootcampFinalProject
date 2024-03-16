@@ -11,7 +11,9 @@ import com.merveyilmaz.userservice.errorMessage.UserErrorMessage;
 import com.merveyilmaz.userservice.general.BusinessException;
 import com.merveyilmaz.userservice.mapper.UserMapper;
 import com.merveyilmaz.userservice.request.*;
+import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.KafkaProducerService;
+import com.merveyilmaz.userservice.service.RestaurantRecommendationService;
 import com.merveyilmaz.userservice.service.serviceEntity.UserEntityService;
 import com.merveyilmaz.userservice.service.serviceEntity.UserReviewEntityService;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,6 +40,8 @@ class UserControllerContractImplTest {
 
     @Mock
     private UserEntityService userEntityService;
+    @Mock
+    private RestaurantRecommendationService recommendationService;
     @Mock
     private KafkaProducerService kafkaProducerService;
     @Mock
@@ -98,7 +103,20 @@ class UserControllerContractImplTest {
     }
 
     @Test
-    void recommendRestaurant() {
+    void shouldRecommendRestaurant() {
+        //given
+        Long userId = 1L;
+        List<RestaurantResponse> recommendedRestaurants = new ArrayList<>();
+
+        //when
+        when(recommendationService.recommendRestaurants(userId)).thenReturn(recommendedRestaurants);
+
+        List<RestaurantResponse> returnedRestaurants = userControllerContract.recommendRestaurant(userId);
+
+        // Then
+        assertNotNull(returnedRestaurants);
+        assertEquals(recommendedRestaurants, returnedRestaurants);
+        verify(kafkaProducerService).sendMessage(eq(INFO_LOG_TOPIC), anyString());
     }
 
     @Test
@@ -154,7 +172,7 @@ class UserControllerContractImplTest {
     }
 
     @Test
-    void updateUser() {
+    void shouldUpdateUser() {
         //given
         Long userId = 1L;
         String firstName = "merve";
@@ -200,42 +218,53 @@ class UserControllerContractImplTest {
     }
 
     @Test
-    void updateUserPassword() {
+    void shouldUpdateUserPassword() {
         //given
         Long userId = 1L;
-        String firstName = "merve";
-        String lastName = "yılmaz";
-        String password = "12345";
-        LocalDateTime userCreateDate = LocalDateTime.of(1990, Month.MAY, 15, 10, 30);
-        LocalDate birthDate = LocalDate.of(1990, 5, 15);
-        String email = "yilmaz.67@outlook.com";
-        Double latitude = 123.123;
-        Double longitude = 123.123;
-        gender = gender.FEMALE;
-        status = status.ACTIVE;
-
         String oldPassword = "oldPassword";
         String newPassword = "newPassword";
-        String incorrectOldPassword = "incorrectOldPassword";
 
+        UserUpdatePasswordRequest request = new UserUpdatePasswordRequest(oldPassword, newPassword);
+
+        User user = new User();
+        user.setId(userId);
+        user.setPassword(oldPassword);
+
+        //when
+        when(userEntityService.findByIdWithControl(userId)).thenReturn(user);
+        when(userEntityService.save(any(User.class))).thenReturn(user);
+
+
+        UserDTO updatedUserDTO = userControllerContract.updateUserPassword(userId, request);
+
+        //then
+        assertNotNull(updatedUserDTO);
+        assertEquals(userId, updatedUserDTO.id());
+        assertEquals(newPassword, user.getPassword());
+        verify(kafkaProducerService).sendMessage(eq(INFO_LOG_TOPIC), eq("User password updated successfully."));
+    }
+
+    @Test
+    void shouldUpdateUserPassword_InvalidOldPassword() {
+        //given
+        Long userId = 1L;
+        String oldPassword = "oldPassword";
+        String incorrectOldPassword = "incorrectOldPassword";
+        String newPassword = "newPassword";
         UserUpdatePasswordRequest request = new UserUpdatePasswordRequest(incorrectOldPassword, newPassword);
 
-        User user = new User(
-                userId, firstName, lastName, password, userCreateDate,
-                birthDate, email, latitude, longitude, gender, status
-        );
+        User user = new User();
+        user.setId(userId);
+        user.setPassword(oldPassword);
 
         //when
         when(userEntityService.findByIdWithControl(userId)).thenReturn(user);
 
-        BusinessException exception = assertThrows(BusinessException.class, () -> {
-            throw new BusinessException(UserErrorMessage.INVALID_OLD_PASSWORD);
-        });
-
         //then
+        BusinessException exception = assertThrows(BusinessException.class,
+                () -> userControllerContract.updateUserPassword(userId, request));
+
         assertEquals(UserErrorMessage.INVALID_OLD_PASSWORD, exception.getBaseErrorMessage());
-        verify(userEntityService).findByIdWithControl(userId);
-        verify(userEntityService, never()).save(user);
-        verify(kafkaProducerService, times(1)).sendMessage(eq(ERROR_LOG_TOPIC), eq("Invalid old password!"));
+        verify(kafkaProducerService).sendMessage(eq(ERROR_LOG_TOPIC), anyString());
     }
 }

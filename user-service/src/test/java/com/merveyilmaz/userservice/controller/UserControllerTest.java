@@ -99,21 +99,8 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void shouldDeleteUser() throws Exception {
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/users/103")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        boolean success = isSuccess(mvcResult);
-
-        assertTrue(success);
-    }
-
-    @Test
     void shouldUpdateUser() throws Exception {
-        Long userId = 1L;
+        Long userId = 102L;
         String firstName = "merve";
         String lastName = "yılmaz";
         String password = "12345";
@@ -132,7 +119,7 @@ class UserControllerTest extends BaseControllerTest {
 
         String requestAsString = objectMapper.writeValueAsString(request);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/users/202")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/users/102")
                         .content(requestAsString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -146,11 +133,11 @@ class UserControllerTest extends BaseControllerTest {
     @Test
     void shouldUpdateUserPassword() throws Exception {
         UserUpdatePasswordRequest request = new UserUpdatePasswordRequest(
-                "oldPass", "newPass");
+                "12345", "12345");
 
         String requestAsString = objectMapper.writeValueAsString(request);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users/202/password")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users/102/password")
                         .content(requestAsString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())

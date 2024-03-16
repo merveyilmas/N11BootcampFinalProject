@@ -6,8 +6,9 @@ import com.merveyilmaz.userservice.dto.ConvertedRestaurantDTO;
 import com.merveyilmaz.userservice.dto.RestaurantDTO;
 import com.merveyilmaz.userservice.entitiy.UserReview;
 import com.merveyilmaz.userservice.exceptions.EmptyListException;
-import com.merveyilmaz.userservice.exceptions.ItemNotFoundException;
+import com.merveyilmaz.userservice.exceptions.NullPointerException;
 import com.merveyilmaz.userservice.general.GeneralErrorMessage;
+import com.merveyilmaz.userservice.general.RestResponse;
 import com.merveyilmaz.userservice.response.RestaurantResponse;
 import com.merveyilmaz.userservice.service.serviceEntity.UserReviewEntityService;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,17 @@ public class RestaurantService {
     private String ERROR_LOG_TOPIC;
 
     public List<RestaurantResponse> getRestaurantsWithRate() {
+        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Started get all restaurants request from restaurant client.");
 
         List<RestaurantResponse> restaurantResponses = new ArrayList<>();
+        RestResponse<List<RestaurantDTO>> restaurantsRestResponse = this.restaurantClient.getAllRestaurants();
 
-        kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Started get all restaurants request from restaurant client.");
-        List<RestaurantDTO> restaurants = this.restaurantClient.getAllRestaurants().getData();
+        if(restaurantsRestResponse == null){
+            kafkaProducerService.sendMessage(ERROR_LOG_TOPIC, "Received empty list from restaurant client!");
+            throw new NullPointerException(GeneralErrorMessage.NULL_DATA_RECEIVED);
+        }
+
+        List<RestaurantDTO> restaurants = restaurantsRestResponse.getData();
         kafkaProducerService.sendMessage(INFO_LOG_TOPIC, "Get all restaurants response from restaurant client.");
 
         if(restaurants.isEmpty()){
@@ -60,7 +67,6 @@ public class RestaurantService {
         }
 
         return restaurantResponses;
-
     }
 
     public double calculateAverageRate(List<UserReview> reviews) {

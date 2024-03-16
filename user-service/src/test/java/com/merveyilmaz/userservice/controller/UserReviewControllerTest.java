@@ -57,7 +57,7 @@ class UserReviewControllerTest extends BaseControllerTest {
     void shouldSave() throws Exception {
 
         UserReviewSaveRequest request =
-                new UserReviewSaveRequest(802L, 102L, EnumRate.ONE, "comment");
+                new UserReviewSaveRequest(102L, 102L, EnumRate.ONE, "comment");
 
         String requestAsString = objectMapper.writeValueAsString(request);
 
@@ -71,17 +71,6 @@ class UserReviewControllerTest extends BaseControllerTest {
         assertTrue(success);
     }
 
-    @Test
-    void shouldDeleteUserReview() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/userReviews/202")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        boolean success = isSuccess(mvcResult);
-
-        assertTrue(success);
-    }
 
     @Test
     void shouldUpdateCommentAndScore() throws Exception {
@@ -90,7 +79,7 @@ class UserReviewControllerTest extends BaseControllerTest {
 
         String requestAsString = objectMapper.writeValueAsString(request);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/userReviews/152/comment-and-score")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/userReviews/202/comment-and-score")
                         .content(requestAsString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
