@@ -1,0 +1,707 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/users/{debugUserId}": {
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "debugUserId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseUserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "Get all users",
+        "description": "Retrieves all users",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseListUserDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "saveUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSaveRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseUserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/userReviews": {
+      "get": {
+        "tags": [
+          "user-review-controller"
+        ],
+        "operationId": "getAllUserReviews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseListUserReviewDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user-review-controller"
+        ],
+        "operationId": "saveUserReview",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserReviewSaveRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseUserReviewDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}/password": {
+      "patch": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "updateUserPassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdatePasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseUserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/userReviews/{id}/comment-and-score": {
+      "patch": {
+        "tags": [
+          "user-review-controller"
+        ],
+        "operationId": "updateCommentAndScore",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "request",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserReviewUpdateCommentAndScoreRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseUserReviewDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/recommend-restaurant/{userId}": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "Gets the first 3 recommended restaurants by user id",
+        "operationId": "getRecommendRestaurants",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseListRestaurantResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "delete": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/userReviews/{id}": {
+      "delete": {
+        "tags": [
+          "user-review-controller"
+        ],
+        "operationId": "deleteUserReview",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserUpdateRequest": {
+        "required": [
+          "id",
+          "latitude",
+          "longitude",
+          "name",
+          "password",
+          "surname"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "userCreateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASSIVE",
+              "ACTIVE"
+            ]
+          }
+        }
+      },
+      "RestResponseUserDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "userCreateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASSIVE",
+              "ACTIVE"
+            ]
+          }
+        }
+      },
+      "UserSaveRequest": {
+        "required": [
+          "latitude",
+          "longitude",
+          "name",
+          "password",
+          "surname"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "userCreateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASSIVE",
+              "ACTIVE"
+            ]
+          }
+        }
+      },
+      "UserReviewSaveRequest": {
+        "required": [
+          "rate",
+          "restaurantId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "restaurantId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "rate": {
+            "type": "string",
+            "enum": [
+              "ONE",
+              "TWO",
+              "THREE",
+              "FOUR",
+              "FIVE"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "RestResponseUserReviewDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UserReviewDTO"
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserReviewDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "restaurantId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "rate": {
+            "type": "string",
+            "enum": [
+              "ONE",
+              "TWO",
+              "THREE",
+              "FOUR",
+              "FIVE"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUpdatePasswordRequest": {
+        "required": [
+          "newPass",
+          "oldPass"
+        ],
+        "type": "object",
+        "properties": {
+          "oldPass": {
+            "type": "string"
+          },
+          "newPass": {
+            "type": "string"
+          }
+        }
+      },
+      "UserReviewUpdateCommentAndScoreRequest": {
+        "type": "object",
+        "properties": {
+          "newComment": {
+            "type": "string"
+          },
+          "newScore": {
+            "type": "string",
+            "enum": [
+              "ONE",
+              "TWO",
+              "THREE",
+              "FOUR",
+              "FIVE"
+            ]
+          }
+        }
+      },
+      "RestResponseListUserDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDTO"
+            }
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestResponseListRestaurantResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestaurantResponse"
+            }
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestaurantResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "distance": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "recommendationScore": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "RestResponseListUserReviewDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserReviewDTO"
+            }
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

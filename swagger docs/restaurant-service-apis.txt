@@ -1,0 +1,241 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/restaurants/{debugRestaurantId}": {
+      "put": {
+        "tags": [
+          "restaurant-controller"
+        ],
+        "operationId": "updateRestaurant",
+        "parameters": [
+          {
+            "name": "debugRestaurantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestaurantUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseRestaurantDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/restaurants": {
+      "get": {
+        "tags": [
+          "restaurant-controller"
+        ],
+        "operationId": "getAllRestaurants",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseListRestaurantDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "restaurant-controller"
+        ],
+        "operationId": "saveRestaurant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestaurantSaveRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestResponseRestaurantDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/restaurants/{id}": {
+      "delete": {
+        "tags": [
+          "restaurant-controller"
+        ],
+        "operationId": "deleteRestaurant",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RestaurantUpdateRequest": {
+        "required": [
+          "id",
+          "latitude",
+          "longitude",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "latitude": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RestResponseRestaurantDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestaurantDTO"
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestaurantDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "restaurantCreateDate": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "latitude": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RestaurantSaveRequest": {
+        "required": [
+          "latitude",
+          "longitude",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "latitude": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RestResponseListRestaurantDTO": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestaurantDTO"
+            }
+          },
+          "responseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messages": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
