@@ -123,3 +123,8 @@
 [2024-03-16T13:32:33.853+0000][3.260s] GC(5) Concurrent Cleanup for Next Mark
 [2024-03-16T13:32:33.856+0000][3.262s] GC(5) Concurrent Cleanup for Next Mark 2.239ms
 [2024-03-16T13:32:33.856+0000][3.262s] GC(5) Concurrent Mark Cycle 23.892ms
+[2024-03-16T19:49:41.263+0000][21933.976s] Heap
+[2024-03-16T19:49:41.265+0000][21933.978s]  garbage-first heap   total 524288K, used 258663K [0x00000000e0000000, 0x0000000100000000)
+[2024-03-16T19:49:41.265+0000][21933.978s]   region size 1024K, 240 young (245760K), 17 survivors (17408K)
+[2024-03-16T19:49:41.265+0000][21933.978s]  Metaspace       used 55809K, committed 56384K, reserved 1114112K
+[2024-03-16T19:49:41.265+0000][21933.978s]   class space    used 7241K, committed 7552K, reserved 1048576K
