@@ -23,7 +23,7 @@ Log servisi ise diğer servislerden gelen bilgi veya hata loglarının tutulmas�
  - docker run -p 5432:5432 -e POSTGRES_PASSWORD=12345 postgres:latest
 3. Docker üzerinde apache solr'ı çalıştırmak için klonladığınız projede bulunan restorant servisininin altındaki docker-compose.yml dosyasını bulunuz. Terminal ekranında ilgili dizine giderek aşağıdaki komut ile çalıştırınız.
  - docker-compose up --build
-4. Docker üzerinde apache kafka'yı çalıştırmak için klonladığınız projede bulunan log servisininin altındaki docker-compose.yml dosyasını bulunuz. Terminal ekranında ilgili dizine giderek aşağıdaki komut ile çalıştırınız. Ve Kafka'nın Docker dışındaki uygulamalar tarafından erişilebilmesi için bilgisayarınızın IP adresini bilgisayarınızda bulunan hosts.txt (/etc/hosts) dosyasına "192.168.1.3 kafka" şeklinde tanımlamanız gerekir.
+4. Docker üzerinde apache kafka'yı çalıştırmak için klonladığınız projede bulunan log servisininin altındaki docker-compose.yml dosyasını bulunuz. Terminal ekranında ilgili dizine giderek aşağıdaki komut ile çalıştırınız. Ve Kafka'nın Docker dışındaki uygulamalar tarafından erişilebilmesi için bilgisayarınızın IP adresini bilgisayarınızda bulunan hosts.txt (/etc/hosts) dosyasına "192.168.1.3 kafka" şeklinde tanımlayınız.
  - docker-compose up --build
 5. Son olarak ise ilgili ide üzerinde tüm servisleri ayağa kaldırınız. Proje kullanıma hazırdır.
 
